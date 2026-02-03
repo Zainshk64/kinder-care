@@ -1,5 +1,6 @@
 // components/Sidebar.jsx
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'  // ← add this
 import { 
   LayoutDashboard, Stethoscope, Calendar, FileText, 
   Settings, HelpCircle, Users, BarChart3, Bell, Baby,
@@ -7,8 +8,13 @@ import {
   ClipboardList, UserCog, PieChart
 } from 'lucide-react'
 
-const Sidebar = ({ userType = 'parent' }) => {
+const Sidebar = () => {
+  const { user, logout: contextLogout } = useAuth()   // ← get real user + logout
   const location = useLocation()
+  const navigate = useNavigate()
+
+  // Use real role from auth context / localStorage
+  const userType = user?.role || user?.userType || 'parent'   // fallback
 
   const parentMenuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/parent-dashboard' },
@@ -46,7 +52,7 @@ const Sidebar = ({ userType = 'parent' }) => {
     ? doctorMenuItems 
     : adminMenuItems
 
-  // Get user display info based on type
+  // Get user display info based on real role
   const getUserInfo = () => {
     switch(userType) {
       case 'parent':
@@ -63,17 +69,33 @@ const Sidebar = ({ userType = 'parent' }) => {
   const userInfo = getUserInfo()
   const UserIcon = userInfo.icon
 
+  // Real logout handler
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    contextLogout()           // clear context state
+    navigate('/login')        // redirect
+  }
+
+  // If no user → maybe show loading or redirect, but for now we render safely
+  if (!user && !localStorage.getItem('token')) {
+    // Optional: could redirect here, but let's keep sidebar renderable
+    // navigate('/login')
+  }
+
   return (
-    <aside className="fixed left-0 top-20 h-[calc(100vh-80px)] w-64 bg-white border-r border-gray-100 shadow-sm z-40">
+    <aside className="fixed left-0  h-[calc(100vh-80px)] w-64 bg-white border-r border-gray-100 shadow-sm z-40">
       <div className="flex flex-col h-full p-4">
-        {/* User Info */}
+        {/* User Info - now with real name */}
         <div className={`bg-gradient-to-br ${userInfo.color} rounded-2xl p-4 mb-6`}>
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
               <UserIcon className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="font-semibold text-white">Welcome Back!</h3>
+              <h3 className="font-semibold text-white">
+                {user?.fullName ? `Hi, ${user.fullName}` : 'Welcome Back!'}
+              </h3>
               <p className="text-sm text-white/80">{userInfo.title}</p>
             </div>
           </div>
@@ -173,8 +195,11 @@ const Sidebar = ({ userType = 'parent' }) => {
           </div>
         )}
 
-        {/* Logout Button */}
-        <button className="flex items-center space-x-3 px-4 py-3 mt-4 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all">
+        {/* Logout Button - now functional */}
+        <button 
+          onClick={handleLogout}
+          className="flex items-center space-x-3 px-4 py-3 mt-4 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+        >
           <LogOut className="w-5 h-5" />
           <span className="font-medium">Logout</span>
         </button>

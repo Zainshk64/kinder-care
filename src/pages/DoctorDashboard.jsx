@@ -81,10 +81,10 @@ const ParentDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      {/* <Navbar /> */}
       <Sidebar userType="parent" />
       
-      <main className="ml-64 pt-20 p-8">
+      <main className="ml-64 p-8">
         {/* Welcome Header */}
         <div className="bg-gradient-to-r from-primary-500 via-primary-600 to-blue-600 rounded-3xl p-8 mb-8 text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
