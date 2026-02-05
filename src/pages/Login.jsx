@@ -343,7 +343,7 @@ const Login = () => {
                 />
                 <motion.button
                   type="button"
-                  whileHover={{ scale: 1.1 }}
+                  // whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary-500 transition-colors p-1"

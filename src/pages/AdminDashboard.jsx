@@ -126,10 +126,10 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      {/* <Navbar /> */}
       <Sidebar userType="admin" />
       
-      <main className="ml-64 pt-20 p-8">
+      <main className="ml-64  p-8">
         {/* Admin Header */}
         <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black rounded-3xl p-8 mb-8 text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>

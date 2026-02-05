@@ -84,7 +84,7 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="fixed left-0  h-[calc(100vh-80px)] w-64 bg-white border-r border-gray-100 shadow-sm z-40">
+    <aside className="fixed left-0  h-screen w-64 bg-white border-r border-gray-100 shadow-sm z-40">
       <div className="flex flex-col h-full p-4">
         {/* User Info - now with real name */}
         <div className={`bg-gradient-to-br ${userInfo.color} rounded-2xl p-4 mb-6`}>
@@ -134,7 +134,7 @@ const Sidebar = () => {
         <div className="border-t border-gray-100 my-4"></div>
 
         {/* Quick Actions for Parent */}
-        {userType === 'parent' && (
+        {/* {userType === 'parent' && (
           <Link 
             to="/ai-triage"
             className="flex items-center justify-center space-x-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-xl mb-4 hover:shadow-lg hover:shadow-green-500/30 transition-all"
@@ -142,7 +142,7 @@ const Sidebar = () => {
             <Activity className="w-5 h-5" />
             <span className="font-semibold">Quick Symptom Check</span>
           </Link>
-        )}
+        )} */}
 
         {/* Quick Actions for Doctor */}
         {userType === 'doctor' && (
